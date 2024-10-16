@@ -1,13 +1,15 @@
 {{ define "main" }}
 
-<!-- Check if the current page has ancestors (only for regular pages) -->
+<!-- Breadcrumb navigation (check if the page has ancestors) -->
 {{ if .IsPage }}
   {{ with .Ancestors }}
     {{ if .HasAncestors }}
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           {{ range .Ancestors.Reverse }}
-            <li class="breadcrumb-item"><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+            <li class="breadcrumb-item">
+              <a href="{{ .Permalink }}">{{ .Title }}</a>
+            </li>
           {{ end }}
           <li class="breadcrumb-item active" aria-current="page">{{ .Title }}</li>
         </ol>
@@ -16,6 +18,7 @@
   {{ end }}
 {{ end }}
 
+<!-- Main content grid layout -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-14">
 
   <section class="md:col-span-2">
@@ -30,7 +33,7 @@
     
     </div>
 
-    <!-- Paginate here -->
+    <!-- Pagination controls -->
     <div class="flex items-center mt-10">
       {{- if .Paginator.HasPrev -}}
         <a class="border rounded-full px-6 py-2 hover:bg-zinc-200 mr-auto" href="{{ .Paginator.Prev.URL }}">← Previous</a>
@@ -43,6 +46,7 @@
   
   </section>
 
+  <!-- Sidebar content -->
   <aside class="md:col-span-1">
     {{- partial "content/aside.html" . -}}
   </aside>
