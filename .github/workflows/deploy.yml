@@ -1,0 +1,35 @@
+name: Deploy Hugo Site
+
+on:
+  push:
+    branches:
+      - main # or your main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16" # Specify Node.js version
+
+      - name: Install Hugo
+        run: |
+          sudo apt-get install hugo
+
+      - name: Build Hugo Site
+        run: |
+          hugo
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: main # or any branch you want to use for your React project
+          destination_repo: <jayshreee10>/<TestBlog> # Replace with your GitHub username and repo
